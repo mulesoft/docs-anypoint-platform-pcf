@@ -1,0 +1,71 @@
+= To Configure a Mule Hazelcast Server
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+:keywords: pcf, hazelcast, clusters, pivotal cloud foundry,
+
+This step is only necessary if you intend to deploy your Mule applications into clusters in PCF. For an explanation about the benefits of having your applications deployed as a cluster, see xref:3.8@mule-runtime::mule-high-availability-ha-clusters.adoc#the-benefits-of-clustering[Mule High Availability Clusters].
+
+If you don’t have a Hazelcast cluster configured, you must configure one using the Mule Hazelcast server provided by MuleSoft.
+
+Once the cluster is installed, take note of the cluster node IPs and ports and the cluster group name and password. You will need this information to bind Mule runtime instances to the cluster.
+
+== Hazelcast as a PCF user-provided service
+
+In order to allow your Mule applications to adopt the cluster configuration, you must create a user-provided service in PCF for each of the nodes in the Hazelcast cluster that you will be connecting your Mule applications to. You can do that through the following command:
+
+----
+cf cups HAZELCAST_NODE_NAME -p ‘{“host”:”HAZELCAST_NODE_IP”,"port":"HAZELCAST_NODE_PORT","clusterId":"HAZELCAST_CLUSTER_GROUP_NAME","clusterPassword":"HAZELCAST_CLUSTER_GROUP_PASSWORD"}'
+----
+
+In the above command, replace the following placeholders:
+
+* `HAZELCAST_NODE_NAME`: Logical name of the Hazelcast node from the cluster that you are defining. It must start with hazelcast.
+* `HAZELCAST_NODE_IP`: IP to connect to the Hazelcast node
+* `HAZELCAST_NODE_PORT`: Port to connect to the Hazelcast node
+* `HAZELCAST_CLUSTER_GROUP_NAME`: Group name set in the Hazelcast cluster configuration
+* `HAZELCAST_CLUSTER_GROUP_PASSWORD`: Group password set in the Hazelcast cluster configuration
+
+For example:
+
+----
+cf cups hazelcast_dev_node1 -p '{"host":"172.16.12.61","port":"5701","clusterId":"dev","clusterPassword":"dev-pass"}'
+----
+
+[NOTE]
+Setting this up is an optional step when xref:pcf-workflow.adoc[configuring Anypoint Platform for PCF]. You need this in case you plan to deploy your applications to clusters on PCF.
+
+
+Mule Hazelcast server is a customization of the https://hazelcast.org/[hazelcast] distribution adapted for the needs of the Mule Runtime.
+
+This custom implementation doesn't change the Hazelcast behavior at all. It just set up basic configuration required by the
+Mule Runtime plus default configuration for logging using log4j.
+
+== Requirements
+
+The only requirement is to have JDK 1.8 installed and the JAVA_HOME environment variable properly set
+
+== Installation
+
+.To install:
+* If you don't have an available Hazelcast distribution, you can download @ https://s3-us-west-1.amazonaws.com/anypoint-anywhere/1.5.2-GA/PCF+Installers/mule-hazelcast-server-distribution-1.1.0-SNAPSHOT-bin.zip[here]
+* Unzip the distribution into your working directory
+* Execute `bin/start.sh` (in linux) or `bin.start.bat` (in windows)
+
+This will start a Hazelcast server node using the default configuration located in the `conf/hazelcast.xml` file.
+
+== Configuration
+
+=== Log4j Configuration
+
+To configure log4j just customize the log4j configuration file located in `conf/log4.xml`.
+
+=== Hazelcast Configuration
+
+To customize the Hazelcast configuration, just modify the file located in conf/hazelcast.xml following
+the http://docs.hazelcast.org/docs/3.6.2/manual/html-single/[hazelcast documentation] instructions. Take into account that the Hazelcast version being used is 3.6.2.
+
+Proper configuration requires:
+
+* Change the default group name and group password. These values are used to define a cluster with Hazelcast. All nodes with the same group name/password will create a cluster
+* Configure the network parameters for proper communication between the cluster nodes

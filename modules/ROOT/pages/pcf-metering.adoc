@@ -1,0 +1,82 @@
+= To Access Usage Data with the PCF Metering API
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+:keywords: pcf, pivotal cloud foundry,
+
+After your Mule applications are deployed to PCF, you can view their usage metrics via the PCF Metering API. Using this API, you can query the following types of data:
+
+* Details of your plan
+* Monthly usage data for your PCF installation
+* Monthly or daily usage for a space
+* Monthly or daily usage for a specific application
+
+For more information, see the RAML definition of the https://anypoint.mulesoft.com/apiplatform/anypoint-platform/#/portals/organizations/68ef9520-24e9-4cf2-b2f5-620025690913/apis/8482323/versions/115119/pages/168687[PCF Metering API]. The API returns usage data as a JSON object.
+
+To access usage data using the PCF Metering API:
+
+. Ensure that you have installed the cf CLI.
+
+. Login to the PCF API endpoint of your installation.
++
+----
+cf login
+----
+
+. Enter your credentials and select an organization.
+
+. List the spaces assigned to your org
++
+----
+cf spaces
+----
+
+. Determine the guid of your space:
++
+----
+cf space SPACE_NAME --guid
+----
+
+. List the applications running in your space
++
+----
+cf space SPACE_NAME
+----
+
+. Determine the guid for your application:
++
+----
+cf app APP_NAME —-guid
+----
+
+. Using the space and application guids, query the API to determine usage.
++
+For example, to view a daily report for a specific application, use a URL similar to the following URL:
++
+----
+http://your-pcf-domain.com/api/v1/metering/spaces/e2f03cf2-1610-4a1b-b477-ec04d47063a7/reports/apps/<appid>/day`
+----
++
+This query returns output similar to the following:
++
+----
+{
+  "spaceId": "e1206f83-c528-4544-bc86-25e25596926e",
+  "appId": "ffd33026-7891-4077-be93-922c15c623cc",
+  "planId": "90389ea8-7c25-415b-9824-a1e82d9ae3c1",
+  "timezone": "UTC",
+  "reportType": "month",
+  "totalUnits": 6,
+  "planName": "production",
+  "month": 3,
+  "year": 2017,
+  "days": [
+    {
+      "date": "2017-03-02",
+      "units": 6
+    }
+  ]
+}
+----
+
+Using this example as a template, you can perform other queries supported by the API

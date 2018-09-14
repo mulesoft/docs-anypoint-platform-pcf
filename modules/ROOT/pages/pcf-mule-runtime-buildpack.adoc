@@ -1,0 +1,39 @@
+= To Install the Mule Runtime Buildpack
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+:keywords: pcf, pivotal cloud foundry, buildpack
+
+The Mule runtime buildpack is a custom Pivotal Cloud Foundry buildpack that contains an image that includes the Mule Runtime and supporting components. You can use this buildpack to deploy Mule applications and API gateways.
+
+. Contact your customer representative to request the Mule runtime buildpack.
+. Download the buildpack to your local file system.
+. Ensure that you have installed the cf CLI command line interface.
+. Install the buildpack in your PCF installation by running:
++
+----
+cf create-buildpack <BUILDPACK_NAME> <BUILDPACK_ZIP_PATH> <POSITION> --enable
+----
++
+Using the following parameters:
++
+[%autowidth.spread]
+|===
+| BUILDPACK_NAME | The name of your buildpack must conform to the following format: `mule_runtime_buildpack_<runtime_version_number>`
+| BUILDPACK_ZIP_PATH | The local path to your buildpack
+| POSITION | Specifies the buildpack's position in the priority list. In general, this value should be 1.
+| --enable | Allows you to push applications using this buildpack
+|===
++
+For example, the command you run should be similar to the following:
++
+----
+cf create-buildpack mule_runtime_buildpack_3_8_1 mule-runtime-buildpack-3.8.1.zip 1 --enable
+----
+
+Buildpacks are installed globally. You can have multiple buildpacks installed. When deploying Mule applications, you can select which buildpack to use.
+
+== See Also
+
+* http://docs.pivotal.io/pivotalcf/1-8/buildpacks/java/index.html[Pivotal Java Buildpack]
+* xref:pcf-buildpack-customize.adoc[To Customize the Mule Runtime Buildpack]

@@ -1,0 +1,121 @@
+= To Run the PCF Space Configuration Tool
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+:keywords: pcf, pivotal cloud foundry,
+
+Pivotal Cloud Foundry (PCF) uses spaces to create different environments for development, staging, and production. Anypoint Platform also uses PCF spaces for reporting usage metrics.
+
+The Space Configuration Tool creates the following services in a PCF space:
+
+* API Gateway Service
+* Runtime Manager Service
+* PCF Metering Service
+
+The Space Configuration Tool also creates a cloud installer app named: `cloudmanager-<uuid>`. The value of `uuid` is a unique identifier for a PCF space.
+
+Each instance of the Space Configuration Tool is linked to an individual PCF space. If you need to manage multiple PCF spaces, you must run the the Space Configuration Tool in each PCF space.
+
+== To Install the Space Configuration Tool
+
+To install the Space Configuration Tool:
+
+. Ensure that you have installed the cf CLI.
+. Download the Space Configuration Tool https://s3-us-west-1.amazonaws.com/anypoint-anywhere/1.5.2-GA/PCF+Installers/space_configuration_tool_1.5.2.zip[here].
+. Open the `space_settings.yml` file and edit the properties to reflect your environment.
+. Run the following script in your PCF environment:
++
+----
+python space_configuration_tool.py -i space_settings.yml
+----
+
+== To Configure the space_settings.yml File
+
+In the `space_settings.yml` file, configure the `pcf-services` and `pcf-cloud-params` properties as required. You must create and configure a separate version of this file for each PCF space you are configuring.
+
+=== pcf-services
+
+This object contains references to each of the services required by the Anypoint Platform for PCF. The default values defined in `space_settings.yml` are:
+
+[source,yaml,linenums]
+----
+pcf-services:
+   - servicename: 'runtime-manager-service'
+     serviceplan: 'runtime-manager-plan-v1'
+     serviceinstancename: 'runtime-manager-service'
+   - servicename: 'API-gateway-service-v1'
+     serviceplan: 'API-gateway-plan-v1'
+     serviceinstancename: 'api-gateway-service'
+   - servicename: 'anypoint-metering-service'
+     serviceplan: 'production'
+     serviceinstancename: 'anypoint-metering-service'
+----
+
+Ensure that the values specified in `space_settings.yml` correspond to the values provided when installing the Anypoint Platform Service Brokers for PCF tile. See https://docs.pivotal.io/partners/mulesoft/configuring.html#services-config[Configure the Runtime Manager and API Gateway Service Brokers] for more information.
+
+To view the services installed in a PCF space, run the following command:
+
+----
+cf marketplace
+----
+
+=== pcf-cloud-params
+
+The Space Configuration Tool uses the properties defined in `pcf-cloud-params` to register a space in an Anypoint Platform organization. Using these properties, it makes API calls directly to the Anypoint Runtime Manager.
+
+Configure each of the following properties in the `space_settings.yml`. The values you define here must be unique for each PCF space you are configuring.
+
+[%header%autowidth.spread]
+|===
+| Property |Description
+|anypoint-org | the orgId of the Anypoint Platform organization. See xref:access-management::organization.adoc[Organization] for more information.
+|anypoint-env | the ID of your Anypoint Platform installation.
+|anypoint-url | the URI used to access your Anypoint Platform installation.
+|memory | the amount of memory assigned to the `cloudmanager` application.
+|instances | the number of instances of the cloud installer services.
+|COM_MULESOFT_CLOUD_MANAGER_PCF_APIURL | the URL of your PCF Apps Manager instance
+|COM_MULESOFT_CLOUD_MANAGER_PCF_DOMAIN | the domain name of your PCF installation
+|COM_MULESOFT_CLOUD_MANAGER_PCF_USERNAME | your PCF administrator username
+|COM_MULESOFT_CLOUD_MANAGER_PCF_PASSWORD | your PCF adminsitrator password
+|COM_MULESOFT_CLOUD_MANAGER_PCF_SPACE | the name of the PCF space where you are running the Space Configuration Tool.
+|COM_MULESOFT_CLOUD_MANAGER_PCF_ORG | the name of the PCF org where you are running the Space Configuration Tool.
+|COM_MULESOFT_CLOUD_MANAGER_PCF_SKIPSSLVALIDATION | skips PCF SSL validation. Set this to false only if PCF deployment doesn't have valid HTTPS certifications.
+|COM_MULESOFT_ARMSERVICES_CLIENT_CLIENTID |  the masterorg `clientId` used to access Anypoint platform.
+|COM_MULESOFT_ARMSERVICES_CLIENT_CLIENTSECRET | the masterorg `clientSecret` used to access Anypoint platform.
+|COM_MULESOFT_ARMSERVICES_CLIENT_BASEURL |
+|COM_MULESOFT_ARMSERVICES_CLIENT_INSECURE | skips SSL validation when connecting to the Runtime Manager. Set this to false only if your Anypoint Platform installation does not have valid HTTPS certificates.
+|AUTHENTICATION_URL | the authentication URL of your Anypoint Platform installation.
+|AUTHENTICATION_INSECURE |
+|===
+
+
+
+== To Verify the Space Configuration Tool Installation
+
+After running the Space Configuration Tool, verify that the different components were created.
+
+. View the service instances installed in your PCF space:
++
+----
+cf services
+----
++
+You should see the following services listed:
++
+* anypoint-metering-service
+* api-gateway-service
+* runtime-manager-service
+
+. View the list of apps installed in a space:
++
+----
+cf apps
+----
++
+You should see an application similar to the following:
++
+----
+cloud-manager-xxxxxxxxx-xxxxx-xxxxx-xxxx-c2c8882f6d65.mydomain.com
+----
++
+The “uuid” is a unique value for a combination of space and Anypoint Platform organization. You must never delete `cloud-manager` as it is used by the Anypoint Platform to deploy apps to PCF spaces.

@@ -1,0 +1,198 @@
+= To Customize the Mule Runtime Buildpack
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+
+In most cases, the default Mule Runtime Buildpack is sufficient. However, you can create a custom buildpack if you need to add additional resource that are included when deploying a Mule application.
+
+. Download the Mule runtime buildpack (zip file).
+
+. Unzip the buildpack.
+
+. Add additional resources
++
+The `resources/mule` directory replicates the Mule runtime directory structure. Files and directories in this location are included with the runtime during deployment. Common resources you may want to add include:
++
+* Custom shared libraries (jar files) in `resources/mule/lib/user`
+* Patches (jar files) in `resources/mule/lib/user`, `resources/mule/lib/mule` and `resources/mule/plugins`
+* Custom domains in `resources/mule/domains`
++
+. Create the required directories as necessary. Refer to xref:3.8@mule-runtime::classloader-control-in-mule.adoc[MuleSoft documentation] for specific details on using custom libraries and patches.
++
+. Zip the customized buildpack, including your changes.
++
+----
+zip -r <buildpack.zip file> <buildpackdir>
+----
++
+. Add the buildpack to your PCF installation by running:
++
+----
+cf create-buildpack <BUILDPACK_NAME> <BUILDPACK_ZIP_PATH> <POSITION> --enable
+----
++
+Using the following parameters:
++
+[%autowidth.spread]
+|===
+| BUILDPACK_NAME | The name of your buildpack must conform to the following format: `mule_runtime_buildpack_<runtime_version_number>`
+| BUILDPACK_ZIP_PATH | The local path to your buildpack
+| POSITION | Specifies the buildpack's position in the priority list. In general, this value should be 1.
+| --enable | Allows you to push applications with this buildpack
+|===
++
+The command you run should be similar to the following:
++
+----
+cf create-buildpack mule_runtime_buildpack_3_8_1 mule-runtime-buildpack-3.8.1.zip 1 --enable
+----
+
+== Inbound HTTP Endpoints
+
+When designing your applications, keep in mind that PCF automatically allocates an internal port on the container. This internal port is linked to the application routes created by the PCF routing subsystem.
+
+This port is supplied to the application through the Java property `${http.port}`. This is the only port on which your application receives inbound traffic. Additionally, applications can only provide a single HTTP listener component.
+
+You must ensure that your application does not specify the `http.port` variable in the `mule-app.properties` file or configuration files loaded through Spring Properties Placeholders. Properties defined in these locations override the port supplied through PCF environment variables mechanims. This will prevent connectivity to your app after it is deployed.
+
+== Container Disk Size
+
+Ensure that you allocate more disk space than memory to your application. This enables you to generate a JVM heap dump if requrested by the MuleSoft support team for diagnostics purposes.
+
+== Application-Specific Configuration
+
+Application-specific configuration is provided through environment variables. These can be supplied through the PCF Apps Manager user interface or through application manifest files.
+
+The following example shows a basic `manifest.yml`:
+
+[source,yaml,linenums]
+----
+---
+applications:
+- name: simpleapi
+  buildpack: mule_runtime_buildpack_3_8_1
+  env:
+    MYCUSTOM_ENV_VARIABLE: -mycustomflag=1234
+----
+
+== Memory Allocation
+
+The Mule runtime buildpack uses the default Java buildpack memory allocation for the different JVM memory spaces, up to the maximum memory allocated to the application through configuration.
+
+== JVM-Specific Parameters
+
+JVM-specific configuration parameters are supplied using the `JAVA_OPTS` property through one of the following:
+
+* The `JAVA_OPTS` environment variable
+* The `config/java_opts` configuration file.
+
+== Applying Patches to Mule Runtime
+
+Add MuleSoft patches (jar files) to the `resources/mule` directory structure as described [here](#application-specific-configuration).
+
+[NOTE]
+Pay attention to the version of the runtime that patches apply to, and ensure it matches the versions the buildpack considers as defined on the `user_config.yml` file.
+
+
+== To Integrate Third-Party Components with the Mule Runtime Buildpack
+
+=== AppDynamics Integration
+
+The Mule runtime buildpack provides out-of-the-box integration with App Dynamics through the standard JavaBuildpack App Dynamics Extension. If the application has a bound custom service following https://github.com/cloudfoundry/java-buildpack/blob/master/docs/framework-app_dynamics_agent.md[naming conventions] and pointing to an App Dynamics instace, the JVM will start with the appropriate flags to connect to it.
+
+See more details aboud App Dynamics integration https://github.com/cloudfoundry/java-buildpack/blob/master/docs/framework-app_dynamics_agent.md[here]
+
+=== Integration with Other Components Supported by the Java Buildpack
+
+Other components/agents that are originally supported by the official https://github.com/cloudfoundry/java-buildpack[`java-buildpack`] can be enabled through the `config/components.yml` file, uncommenting entries as appropriate. Although these components/agents should use the Java Buildpack standard extension mechanisms to provide required flags to the JVM, bear in mind that these components are not tested nor supported by MuleSoft.
+
+== To Debug and Troubleshoot
+
+=== Debugging Buildpack Provisioning Process
+
+Add a `JBP_LOG_LEVEL=debug` environment variable to generate verbose debugging output of the whole buildpack provisioning process, as described on section (#Application-specific-configuration). Debug information will be produced on the application logs.
+
+
+=== JVM Diagnostics Information
+
+If a runtime deployed on a Cloud Foundry environment through the builpack runs into issues, MuleSoft Support team will request a JVM heap dump or JVM thread dump for diagnostics purposes. In order to generate one, you need to log in the CF container running your application, use JDK tools to generate the dump, and upload the data through `scp` or `sftp` outside the CF env.
+
+[IMPORTANT]
+*Make sure your application always has more disk space allocated than memory, to be able to store the dumps on the container transient storage filesystem and upload to an external SFTP or SSH server.*
+
+To perform this process, follow these steps:
+
+. Log-in your application container through SSH
++
+If your space configuration allows it, you can enable SSH access using the CF CLI:
++
+----
+cf enable-ssh MY-APP
+----
++
+Then you can log-in to the container through the following command:
++
+----
+cf ssh MY-APP
+----
++
+(If your space doesn't allow SSH access, request it to a CF administrator or deploy the app on a space that allows it)
++
+More information on enabling SSH access can be found here: https://docs.cloudfoundry.org/devguide/deploy-apps/ssh-apps.html
+
+
+. Find JVM process PID
++
+You can determine the JVM process running the Mule runtime through the following command:
++
+----
+$ PID=$(pgrep java)
+----
+
+. Produce the diagnostics data
++
+You can use JDK toolkit to produce the diagnostics data MuleSoft Support team is requesting.
++
+For example, to produce a JVM heap dump with Oracle JDK use the following command:
++
+----
+$ /home/vcap/app/.java-buildpack/oracle_jre/bin/jmap -dump:format=b,file=heap.bin $PID
+----
+
+. To produce a JVM heap dump with Open JDK, use the following command:
++
+----
+ $ /home/vcap/app/.java-buildpack/open_jdk_jre/bin/jmap -dump:format=b,file=heap.bin $PID
+----
++
+For example, to produce a JVM thread dump with Oracle JDK use the following command:
++
+----
+$ /home/vcap/app/.java-buildpack/oracle_jre/bin/jstack -dump:format=b,file=heap.bin $PID
+----
+
+. To produce a JVM thread dump with Open JDK, run the following command:
++
+----
+ $ /home/vcap/app/.java-buildpack/open_jdk_jre/bin/jstack -dump:format=b,file=heap.bin $PID
+----
+
+. Send the diagnostics data to an external SSH/SFTP server
++
+You can use `scp` or `sftp` to upload the dumps to an external server, from where you can provide it to MuleSoft Support team:
++
+----
+scp heap.bin user@externalserver.myorg.com:/home/user
+----
+
+== To Provide Diagnostics Information for MuleSoft Support Team
+
+If you need to report an issue with the Mule runtime or the buildpack itself through MuleSoft support process, you must provide the following information:
+
+* Supply buildpack diagnostics information.
+* If the issue is related to the Anypoint runtime engine, supply JVM diagnostics information.
+* If the issue is related to the buildpack provisioning process, supply the debugging buildpack provisioning process.
+
+== See Also
+
+* https://docs.run.pivotal.io/devguide/deploy-apps/manifest.html[Deploying with Application Manifests]

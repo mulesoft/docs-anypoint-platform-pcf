@@ -1,0 +1,28 @@
+= About Software Requirements for Anypoint Platform for PCF
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+
+Anypoint Platform for PCF requires the following software components:
+
+* Anypoint Platform Private Cloud Edition
+
+* Pivotal Cloud Foundry (PCF)
++
+Anypoint Platform for PCF only supports Pivotal Cloud Foundry, versions 1.7.x and 1.8.x. It does not support the open source version of Cloud Foundry or any other Cloud Foundry distribution.
+
+* MuleSoft Anypoint Platform Service Brokers for PCF
+
+* Redis for PCF
++
+Anypoint Platform for PCF supports the latest version of Redis for PCF supported for your PCF version.
+
+* Rabbit MQ for PCF
++
+Anypoint Platform for PCF supports the latest version of Rabbit MQ for PCF supported for your PCF version.
+
+* Cloud Foundry Command Line Interface (cf CLI)
+
+* The default Java buildpack for PCF
+
+* Python 2.x or later

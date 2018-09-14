@@ -1,0 +1,14 @@
+= To Use CA Certificates with Rabbit MQ
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+
+This topic describes how to configure Rabbit MQ to use custom CA certificates. This is applicable when using the metrics features of Anypoint Platform for PCF. By default Rabbit MQ generates its own CA certificates, but you can add additional certificates as required.
+
+
+. Add the custom CA certificate to your Rabbit MQ configuration using the Ops Manager Installation Dashboard.
++
+See https://docs.pivotal.io/rabbitmq-cf/1-7/configuring.html[Configuring the RabbitMQ Service].
+. Add the custom CA certificate to your Ops Manager Director configuration.
++
+See https://docs.pivotal.io/pivotalcf/1-10/customizing/cloudform-om-config.html#security[Security Page].

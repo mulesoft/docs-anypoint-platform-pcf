@@ -1,0 +1,34 @@
+= About Anypoint Platform for Pivotal Cloud Foundry
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+:keywords: pcf, pivotal cloud foundry,
+
+The Anypoint Platform for Pivotal Cloud Foundry (PCF) component is a fully integrated solution that enables organizations to design, develop, deploy, manage, and operate APIs, connectivity apps and microservices within the infrastructure provided by Pivotal Cloud Foundry.
+
+The Anypoint Platform for PCF solution enables you to:
+
+* Deploy Mule applications to PCF using the Runtime Manager UI.
+* Create and deploy a Mule proxy application to PCF. A proxy application intercepts traffic to a non-Mule application, enabling you to apply policies and view usage metrics.
+
+If you are using Anypoint Platform for PCF and you have multiple PCF installations, each must be linked to its own separate installation of Anypoint Platform Private Cloud Edition.
+
+If you have a PCF installation with multiple spaces, you must run the *Space Configuration Tool* on each of these spaces. If your Anypoint Platform organization uses multiple environments, it is recommended that you have one PCF space for each.
+
+Anypoint Platform for PCF uses the following services:
+
+* **Runtime Manager Service**: exposes PCF as a deployment target within the Anypoint Runtime Manager and lets you deploy Mule applications to PCF, alongside other deployment targets.
+
+* **API Gateway Service**: enables you to create and deploy a Mule API proxy that intercepts traffic to a non-Mule application running on PCF. This allows you to use the MuleSoft interface to apply policies over the API and the PCF interface to view usage and policy metrics.
+
+* **Anypoint Metering Service**: provides an API that enables you to view usage metrics for Mule applications deployed to PCF. You can view usage metrics for production, pre-production, staging, and development environments.
+
+
+== To Install and Configure
+
+For procedures for installing and configuring Anypoint Platform for PCF, see xref:pcf-workflow.adoc[Workflow: Install, Configure, and Use Anypoint Platform for PCF].
+
+== See Also
+
+* https://pivotal.io/platform[Pivotal Cloud Foundry]
+* xref:runtime-manager::deployment-strategies.adoc[Deployment Strategies]
