@@ -4,7 +4,11 @@ include::_attributes.adoc[]
 endif::[]
 :keywords: pcf, pivotal cloud foundry, buildpack
 
-The Mule runtime buildpack is a custom Pivotal Cloud Foundry buildpack that contains an image that includes the Mule Runtime and supporting components. You can use this buildpack to deploy Mule applications and API gateways.
+The Mule Runtime Buildpack is a custom Pivotal Cloud Foundry buildpack that contains an image that includes the Mule Runtime and supporting components.
+
+This current version of the MuleSoft Runtime buildpack is based on the Pivotal Cloud Foundry Java Buildpack, version 4.2. MuleSoft Runtime Buildpacks based on older version are still available. Compatibility is based on compatibility of the base version of the Java buildpack with the PCF version.
+
+You can use this buildpack to deploy Mule applications and API gateways.
 
 . Contact your customer representative to request the Mule runtime buildpack.
 . Download the buildpack to your local file system.
@@ -35,5 +39,6 @@ Buildpacks are installed globally. You can have multiple buildpacks installed. W
 
 == See Also
 
+* https://github.com/cloudfoundry/java-buildpack/releases[Java Buildpack Release Notes]
 * http://docs.pivotal.io/pivotalcf/1-8/buildpacks/java/index.html[Pivotal Java Buildpack]
 * xref:pcf-buildpack-customize.adoc[To Customize the Mule Runtime Buildpack]

@@ -33,7 +33,7 @@ cf cups hazelcast_dev_node1 -p '{"host":"172.16.12.61","port":"5701","clusterId"
 ----
 
 [NOTE]
-Setting this up is an optional step when xref:pcf-workflow.adoc[configuring Anypoint Platform for PCF]. You need this in case you plan to deploy your applications to clusters on PCF.
+Setting this up is an optional step when xref:1.5@pcf-workflow.adoc[configuring Anypoint Platform for PCF]. You need this in case you plan to deploy your applications to clusters on PCF.
 
 
 Mule Hazelcast server is a customization of the https://hazelcast.org/[hazelcast] distribution adapted for the needs of the Mule Runtime.
@@ -48,7 +48,6 @@ The only requirement is to have JDK 1.8 installed and the JAVA_HOME environment 
 == Installation
 
 .To install:
-* If you don't have an available Hazelcast distribution, you can download @ https://s3-us-west-1.amazonaws.com/anypoint-anywhere/1.5.2-GA/PCF+Installers/mule-hazelcast-server-distribution-1.1.0-SNAPSHOT-bin.zip[here]
 * Unzip the distribution into your working directory
 * Execute `bin/start.sh` (in linux) or `bin.start.bat` (in windows)
 
