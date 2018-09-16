@@ -1,4 +1,5 @@
 .xref:index.adoc[About Anypoint Platform for PCF]
+* xref:index.adoc[About Anypoint Platform for PCF]
 * xref:pcf-system-requirements.adoc[About System and Software Requirements]
 * xref:pcf-workflow.adoc[Workflow: Install and Configure Anypoint Platform for PCF]
  ** xref:pcf-mule-runtime-buildpack.adoc[To Install the Mule Runtime BuildPack]
