@@ -1,5 +1,5 @@
 name: anypoint-platform-pcf
 title: Anypoint Platform for PCF
-version: 'master'
+version: '1.6'
 nav:
 - modules/ROOT/nav.adoc
