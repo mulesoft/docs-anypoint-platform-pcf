@@ -2,7 +2,7 @@
 * xref:index.adoc[About Anypoint Platform for PCF]
 * xref:pcf-system-requirements.adoc[About System and Software Requirements]
 * xref:pcf-workflow.adoc[Workflow: Install and Configure Anypoint Platform for PCF]
- ** xref:pcf-mule-runtime-buildpack.adoc[To Install the Mule Runtime BuildPack]
+ ** xref:pcf-mule-runtime-buildpack.adoc[To Install the Mule Runtime Buildpack]
  ** xref:pcf-space-config.adoc[To Run the PCF Space Configuration Tool]
  ** xref:pcf-mule-hazelcast.adoc[(Optional) To Configure the Mule Hazelcast Server]
 * xref:pcf-metering-about.adoc[About PCF Metrics and Usage]
