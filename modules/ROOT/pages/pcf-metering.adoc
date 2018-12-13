@@ -25,7 +25,7 @@ cf login
 
 . Enter your credentials and select an organization.
 
-. List the spaces assigned to your org
+. List the spaces assigned to your org.
 +
 ----
 cf spaces
@@ -37,7 +37,7 @@ cf spaces
 cf space SPACE_NAME --guid
 ----
 
-. List the applications running in your space
+. List the applications running in your space.
 +
 ----
 cf space SPACE_NAME
@@ -79,4 +79,4 @@ This query returns output similar to the following:
 }
 ----
 
-Using this example as a template, you can perform other queries supported by the API
+Using this example as a template, you can perform other queries supported by the API.

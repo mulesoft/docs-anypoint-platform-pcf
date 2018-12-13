@@ -5,7 +5,7 @@ endif::[]
 
 This topic describes the metrics feature of the Anypoint Platform for PCF.
 
-Anypoint Platform for PCF provides a pricing plans based on different stages of the application development life cycle:
+Anypoint Platform for PCF provides pricing plans based on different stages of the application development life cycle:
 
 * production
 * pre-production
