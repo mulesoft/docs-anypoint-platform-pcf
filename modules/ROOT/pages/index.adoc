@@ -6,12 +6,9 @@ endif::[]
 
 The Anypoint Platform for Pivotal Cloud Foundry (PCF) component is a fully integrated solution that enables organizations to design, develop, deploy, manage, and operate APIs, connectivity apps and microservices within the infrastructure provided by Pivotal Cloud Foundry.
 
-The Anypoint Platform for PCF solution enables you to:
+The Anypoint Platform for PCF solution enables you to create and deploy Mule applications and proxies to PCF. A proxy application intercepts traffic to a non-Mule application, enabling you to apply policies and view usage metrics.
 
-* Deploy Mule applications to PCF using the Runtime Manager UI.
-* Create and deploy a Mule proxy application to PCF. A proxy application intercepts traffic to a non-Mule application, enabling you to apply policies and view usage metrics.
-
-If you are using Anypoint Platform for PCF and you have multiple PCF installations, each must be linked to its own separate installation of Anypoint Platform Private Cloud Edition.
+If you are using Anypoint Platform for PCF with Anypoint Platform Private Cloud Edition (PCE) and you have multiple PCF installations, each must be linked to its own separate installation of PCE.
 
 If you have a PCF installation with multiple spaces, you must run the *Space Configuration Tool* on each of these spaces. If your Anypoint Platform organization uses multiple environments, it is recommended that you have one PCF space for each.
 
