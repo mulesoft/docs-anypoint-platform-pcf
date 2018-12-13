@@ -20,8 +20,8 @@ Each instance of the Space Configuration Tool is linked to an individual PCF spa
 
 To install the Space Configuration Tool:
 
-. Ensure that you have installed the cf CLI.
-. Download the Space Configuration Tool https://anypoint-anywhere.s3.amazonaws.com/1.5.1-GA/PCF%20Installers/space_configuration_tool_1.5.1.zip?Signature=KuhacRjLYmHt9PMa39I%2FLmZ74Hs%3D&Expires=1520192881&AWSAccessKeyId=AKIAITTY5MSTT3INJ7XQ[here].
+. Ensure you have installed the cf CLI.
+. https://anypoint-anywhere.s3.amazonaws.com/0-pcf-buildpack/space_configuration_tool_1.6.1.zip?Signature=a5dJMDDo6P8vDPLC2LZC3y3oQKU%3D&Expires=1693292271&AWSAccessKeyId=AKIAJLQK3BRL7BNERD4Q[Download] the Space Configuration Tool.
 . Open the `space_settings.yml` file and edit the properties to reflect your environment.
 . Run the following script in your PCF environment:
 +
