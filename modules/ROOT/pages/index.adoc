@@ -70,85 +70,102 @@ With the native tooling, customers can perform the following actions:
 ****** Automatic failover of Mule applications.
 
 ===== API Policy Management 
-[Updated] API policies are supported, but requires the following additional setup:
+API policies are supported with the following additional setup:
 
-Steps to do in PCE versions 1.6.x and 1.7.x:
+For PCE versions 1.6.x and 1.7.x:
 
-Deploy customer app
-Deploy Proxy App
-Create User Service Instance for proxy app
-Create a route between proxyApp and customer App
-Start Using customer app url that is getting routed through proxy with policies applied
+. Deploy an app:
 
-Deploy Customer App:
-                Deploy app using “cf push <app>” with manifest file or usual cf commands
-                After app is created, do cf app <app> and note down the url of the customer app.
-      2. Deploy Proxy App:
-               Require PCE instance to get properties.
+.. Deploy an app using `cf push <app>` with the manifest file or typical `cf` commands.
+.. After the app is created, run `cf app <app>` and make note of the app URL.
+. Deploy a proxy application:
+               
+.. Use the PCE instance to get properties.
++
+----
+-Dapi.name=<customerApp name>     
+-Dapi.version=<version of the app ex: 1.0>    
+-Dimplementation.host=<url of customerapp ex: springboot.apps.santafesprings.cf-app.com>
+-Dimplementation.port=80 
+-Dimplementation.path=/ 
+-Danypoint.platform.client_id=<clientId property that you have for the org ex: cdbff39bfa4741fb9bb531ba6102a578> 
+-Danypoint.platform.client_secret=<ClientId secret of the org ex: 56bB958Bc257464B9fF0A9F9E6Af9890> 
+-Danypoint.platform.platform_base_uri=< ex: https://qax.anypoint.mulesoft.com/apiplatform>
+-Danypoint.platform.coreservice_base_uri=< ex: https://qax.anypoint.mulesoft.com/accounts >
+-Danypoint.platform.on_prem=true 
+-Danypoint.platform.contracts_base_uri=< ex: https://qax.anypoint.mulesoft.com/apigateway/ccs>
+----
 
-               -Dapi.name=<customerApp name>     
-               -Dapi.version=<version of the app ex: 1.0>    
-               -Dimplementation.host=<url of customerapp ex: springboot.apps.santafesprings.cf-app.com>
-               -Dimplementation.port=80 
-               -Dimplementation.path=/ 
-               -Danypoint.platform.client_id=<clientId property that you have for the org ex: cdbff39bfa4741fb9bb531ba6102a578> 
-               -Danypoint.platform.client_secret=<ClientId secret of the org ex: 56bB958Bc257464B9fF0A9F9E6Af9890> 
-               -Danypoint.platform.platform_base_uri=< ex: https://qax.anypoint.mulesoft.com/apiplatform>
-               -Danypoint.platform.coreservice_base_uri=< ex: https://qax.anypoint.mulesoft.com/accounts >
-               -Danypoint.platform.on_prem=true 
-         -Danypoint.platform.contracts_base_uri=< ex: https://qax.anypoint.mulesoft.com/apigateway/ccs>
-
-After gathering all the properties, start deploying the proxy through following steps.
+.. After gathering all the properties, deploy the proxy:
++
+----
 . cf push <proxy> -b <mulebuildpackname> -p <proxy app that mulesoft provided> --no-start
 . cf set-env <proxy-app> mcm_anypoint_metering_plan_unlimited true
-. cf set-env <proxy-app> MULE_JAVA_OPTS "-Dapi.name=muleapp -Dapi.version=1.0 -Dimplementation.host=muleapp.apps.santafesprings.cf-app.com -Dimplementation.port=80 -Dimplementation.path=/ -Danypoint.platform.client_id=0f2ea15d88fa452e8ca1a5f4bb724728 -Danypoint.platform.client_secret=BbCA70Bb056F437e94C707B67aF4284D -Danypoint.platform.platform_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/apiplatform -Danypoint.platform.coreservice_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/accounts -Danypoint.platform.on_prem=true -Danypoint.platform.contracts_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/apigateway/ccs"
+. cf set-env <proxy-app> MULE_JAVA_OPTS "-Dapi.name=muleapp -Dapi.version=1.0
+-Dimplementation.host=muleapp.apps.santafesprings.cf-app.com -Dimplementation.port=80
+-Dimplementation.path=/ -Danypoint.platform.client_id=0f2ea15d88fa452e8ca1a5f4bb724728
+-Danypoint.platform.client_secret=BbCA70Bb056F437e94C707B67aF4284D
+-Danypoint.platform.platform_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/apiplatform
+-Danypoint.platform.coreservice_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/accounts -Danypoint.platform.on_prem=true
+-Danypoint.platform.contracts_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/apigateway/ccs
 
 . cf start <proxy>
+----
 
-Tail the logs cf logs <proxy>
-You should see in logs    2018-11-13T10:07:09.52-0800 [APP/PROC/WEB/0] OUT INFO  2018-11-13 18:07:09,494 [agw-policy-polling.01] com.mulesoft.module.policies.lifecyle.GateKeeper: API <proxyappname> <version> is now unblocked.
+.. Tail the logs by running `cf logs <proxy>`.
 
-And going to PCE instance API manager, proxy should auto registers and appear in with status as ACTIVE. If you see any 401 or 500 errors in the logs, make sure you have sufficient permissions to create an API in API manager.
+***  The 2018-11-13T10:07:09.52-0800 [APP/PROC/WEB/0] OUT INFO  2018-11-13 18:07:09,494 [agw-policy-polling.01] com.mulesoft.module.policies.lifecyle.GateKeeper log should indicate that API <proxyappname> <version> is now unblocked.
 
-At this step, we deployed proxy in PCF and auto registers /discovers at PCE instance using the properties that we provided in earlier step.
+*** In the PCE instance of API manager, the proxy auto registers with status as ACTIVE. If you see `401` or `500` errors in the logs, make sure you have sufficient permissions to create an API in API manager. The proxy uses the properties provided in the previous step.
 
-3. Create User instance for proxy app
-    Ref: https://docs.cloudfoundry.org/services/route-services.html#user-provided
-   cf create-user-provided-service SERVICE-INSTANCE -r ROUTE-SERVICE-URL 
-Ex: cf create-user-provided-service muleappproxy -r https://muleappproxy.apps.santafesprings.cf-app.com
+.. Create a user service instance for the proxy app using the following command:
++
+----
+`cf create-user-provided-service SERVICE-INSTANCE -r ROUTE-SERVICE-URL`
+----
+... For example, `cf create-user-provided-service muleappproxy -r https://muleappproxy.apps.santafesprings.cf-app.com`.
+... For additional information, refer to https://docs.cloudfoundry.org/services/route-services.html#user-provided[User-Provided Service, role=external, window=_blank].
 
-4. Bind or create route
-
+.. Bind or create a route between proxyApp and the app using the following command:
++
+----
 cf bind-route-service DOMAIN SERVICE-INSTANCE [--hostname HOSTNAME]
+----
 
-Ex: cf bind-route-service apps.santafesprings.cf-app.com muleappproxy --hostname springbootapp
+... For example, `cf bind-route-service apps.santafesprings.cf-app.com muleappproxy --hostname springbootapp`.
 
-5. Validation
-Try hitting the URL of the customerapp and see if it is still reachable and in proxy logs you should see lot of logs when you hit customerapp. And if it is not, then there is an issue with routing or proxy app
+.. Verify the app URL
 
-Configure policies for proxyAPI in PCE instance API manager. Try applying simple auth and httpauth and you should see policies getting applied logs in proxyapp logs.
+... To make sure that the app is getting routed through the proxy with policies applied, 
+hit the URL of the app to ensure it is reachable. You should see multiple logs. If not, then there is an issue with 
+routing or the proxy app.
+... In the PCE instance of API Manager, configure policies for proxyAPI.
+... Apply simple auth and httpauth. You should see policies getting applied to logs in proxyapp logs.
+... Go to the customer app and it should now ask for the authorization that you configured in API manager.
 
-Now try hitting the customerapp and it should now ask auth that you configured in API manager.
-You can try other policies like throttling.
+====== For CloudHub (anypoint.mulesoft.com) and latest PCE instance 2.0.0:
 
-
-Extra steps in CloudHub (anypoint.mulesoft.com) and latest PCE instance 2.0.0:
-
-In API manager 2.0, there are extra steps which are listed at ex: https://docs.mulesoft.com/api-manager/2.x/configure-autodiscovery-3-task
-You should first register the API in API manager and API manager should provide API name and API version and these two properties should be used when configuring the properties in Step2.
-                -Dapi.name=<long App name from API manager> ex: groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:proxyapp     
-               -Dapi.version=<version of the app ex: v1:136567>    
-     3. Also clientId and secret are for the environment instead of organization. Make sure you created the API in corresponding environment from which clientId and secret are provided to proxy.
-
-Example property: cf set-env muleappproxy MULE_JAVA_OPTS "-Dapi.name=groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:mm -Dapi.version=v1:136567 -Dimplementation.host=muleapp.apps.santafesprings.cf-app.com -Dimplementation.port=80 -Dimplementation.path=/ -Danypoint.platform.client_id=cdbff39bfa4741fb9bb531ba6102a578 -Danypoint.platform.client_secret=56bB958Bc257464B9fF0A9F9E6Af9890 -Danypoint.platform.platform_base_uri=https://qax.anypoint.mulesoft.com/apiplatform -Danypoint.platform.coreservice_base_uri=https://qax.anypoint.mulesoft.com/accounts -Danypoint.platform.on_prem=false -Danypoint.platform.contracts_base_uri=https://qax.anypoint.mulesoft.com/apigateway/ccs"
-
-
-
-
-
-
-
-
+. For API manager 2.0, perform the steps in xref:api-manager/2.x/configure-autodiscovery-3-task.adoc [Configuring API Gateway API Autodiscovery in a Mule 3 Application, role=external, window=_blank].
+. Register the API in API manager.
+. Use the API name and version provided by the API manager to configure the properties:
++
+----
+-Dapi.name=<long App name from API manager> ex: groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:proxyapp     
+-Dapi.version=<version of the app ex: v1:136567>
+----
+. Make sure you created the API in the environment from which `clientId` and `secret` are provided to the proxy. `clientId` and `secret` apply to the environment, not the organization. For example:
+----
+cf set-env muleappproxy MULE_JAVA_OPTS
+-Dapi.name=groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:mm
+-Dapi.version=v1:136567 -Dimplementation.host=muleapp.apps.santafesprings.cf-app.com
+-Dimplementation.port=80 -Dimplementation.path=/
+-Danypoint.platform.client_id=cdbff39bfa4741fb9bb531ba6102a578
+-Danypoint.platform.client_secret=56bB958Bc257464B9fF0A9F9E6Af9890
+-Danypoint.platform.platform_base_uri=https://qax.anypoint.mulesoft.com/apiplatform
+-Danypoint.platform.coreservice_base_uri=https://qax.anypoint.mulesoft.com/accounts
+-Danypoint.platform.on_prem=false
+-Danypoint.platform.contracts_base_uri=https://qax.anypoint.mulesoft.com/apigateway/ccs
+----
 
 
 === PCF-PAS
