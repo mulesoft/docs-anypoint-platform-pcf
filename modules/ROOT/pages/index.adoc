@@ -23,6 +23,145 @@ Anypoint Platform for PCF uses the following services:
 
 * **Anypoint Metering Service**: provides an API that enables you to view usage metrics for Mule applications deployed to PCF. You can view usage metrics for production, pre-production, staging, and development environments.
 
+== What PCF Supports
+
+When running Mule on Pivotal Cloud Foundry (PCF) and using the cloud-hosted control plane, deploy Runtime Fabric for Mule deployments alongside your PCF environment, as this provides better integration of Anypoint Platform, support for managed patches, and new runtime versions.
+
+If you choose not to use the cloud-hosted control plane, use the native PCF tooling for deploying and managing Mule on PCF.
+
+=== What does MuleSoft provide?
+
+==== Buildpacks for Mule runtimes
+MuleSoft provides a buildpack for each of the following versions of the Mule runtime. These buildpacks enable you to deploy their applications to PCF using native tooling.
+
+***** Mule 3.9.1
+***** Mule 3.8.7
+***** Mule 3.8.5
+***** Mule 3.8.1
+==== Anypoint Platform Tile
+The Anypoint Platform Tile contains 3 service brokers, which perform the following actions:
+
+***** Manage Mule applications in PCE v1.6.1 or earlier.
+***** Manage API policies in PCE v1.6.1 or earlier.
+***** Count incoming transactions to deployed Mules.
+
+The first two service brokers are no longer compatible with Anypoint Private Cloud Edition (PCE) as of v1.7 and later. 
+The third service broker is used to count the number of incoming transactions for each Mule application or API. Coupled with a metering plugin which resides on each Mule buildpack, this service broker generates reports for auditing and licensing purposes. The service was built to support a transaction-based pricing model for Mules deployed on PCF.
+
+=== What is supported with PCF?
+
+==== On-premise standalone
+
+===== Mule Application Deployments
+In practice, customers use the native tooling (API, CLI) that PCF provides to deploy and manage their Mule applications similar to other applications they deploy and manage on PCF. 
+
+With the native tooling, customers can perform the following actions:
+
+****** Deploy applications with CLI, API, or a common build pipeline
+****** Set custom properties.
+****** Horizontally scale their Mule applications by increasing the number of replicas.
+****** Specify the version of the Mule runtime per application.
+****** Specify the amount of memory for each application replica.
+****** Cluster Mule runtimes by setting up an externalized HazelCast service broker.
+****** Configuring the application endpoint name.
+****** Start, stop, and delete Mule applications.
+****** View monitoring data and set alerting via PCF metrics.
+****** Re-deploy without downtime, with support for blue/green deployments.
+****** Automatic failover of Mule applications.
+
+===== API Policy Management 
+[Updated] API policies are supported, but requires the following additional setup:
+
+Steps to do in PCE versions 1.6.x and 1.7.x:
+
+Deploy customer app
+Deploy Proxy App
+Create User Service Instance for proxy app
+Create a route between proxyApp and customer App
+Start Using customer app url that is getting routed through proxy with policies applied
+
+Deploy Customer App:
+                Deploy app using “cf push <app>” with manifest file or usual cf commands
+                After app is created, do cf app <app> and note down the url of the customer app.
+      2. Deploy Proxy App:
+               Require PCE instance to get properties.
+
+               -Dapi.name=<customerApp name>     
+               -Dapi.version=<version of the app ex: 1.0>    
+               -Dimplementation.host=<url of customerapp ex: springboot.apps.santafesprings.cf-app.com>
+               -Dimplementation.port=80 
+               -Dimplementation.path=/ 
+               -Danypoint.platform.client_id=<clientId property that you have for the org ex: cdbff39bfa4741fb9bb531ba6102a578> 
+               -Danypoint.platform.client_secret=<ClientId secret of the org ex: 56bB958Bc257464B9fF0A9F9E6Af9890> 
+               -Danypoint.platform.platform_base_uri=< ex: https://qax.anypoint.mulesoft.com/apiplatform>
+               -Danypoint.platform.coreservice_base_uri=< ex: https://qax.anypoint.mulesoft.com/accounts >
+               -Danypoint.platform.on_prem=true 
+         -Danypoint.platform.contracts_base_uri=< ex: https://qax.anypoint.mulesoft.com/apigateway/ccs>
+
+After gathering all the properties, start deploying the proxy through following steps.
+. cf push <proxy> -b <mulebuildpackname> -p <proxy app that mulesoft provided> --no-start
+. cf set-env <proxy-app> mcm_anypoint_metering_plan_unlimited true
+. cf set-env <proxy-app> MULE_JAVA_OPTS "-Dapi.name=muleapp -Dapi.version=1.0 -Dimplementation.host=muleapp.apps.santafesprings.cf-app.com -Dimplementation.port=80 -Dimplementation.path=/ -Danypoint.platform.client_id=0f2ea15d88fa452e8ca1a5f4bb724728 -Danypoint.platform.client_secret=BbCA70Bb056F437e94C707B67aF4284D -Danypoint.platform.platform_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/apiplatform -Danypoint.platform.coreservice_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/accounts -Danypoint.platform.on_prem=true -Danypoint.platform.contracts_base_uri=https://161-171-upgrade-2056596225.us-east-2.elb.amazonaws.com/apigateway/ccs"
+
+. cf start <proxy>
+
+Tail the logs cf logs <proxy>
+You should see in logs    2018-11-13T10:07:09.52-0800 [APP/PROC/WEB/0] OUT INFO  2018-11-13 18:07:09,494 [agw-policy-polling.01] com.mulesoft.module.policies.lifecyle.GateKeeper: API <proxyappname> <version> is now unblocked.
+
+And going to PCE instance API manager, proxy should auto registers and appear in with status as ACTIVE. If you see any 401 or 500 errors in the logs, make sure you have sufficient permissions to create an API in API manager.
+
+At this step, we deployed proxy in PCF and auto registers /discovers at PCE instance using the properties that we provided in earlier step.
+
+3. Create User instance for proxy app
+    Ref: https://docs.cloudfoundry.org/services/route-services.html#user-provided
+   cf create-user-provided-service SERVICE-INSTANCE -r ROUTE-SERVICE-URL 
+Ex: cf create-user-provided-service muleappproxy -r https://muleappproxy.apps.santafesprings.cf-app.com
+
+4. Bind or create route
+
+cf bind-route-service DOMAIN SERVICE-INSTANCE [--hostname HOSTNAME]
+
+Ex: cf bind-route-service apps.santafesprings.cf-app.com muleappproxy --hostname springbootapp
+
+5. Validation
+Try hitting the URL of the customerapp and see if it is still reachable and in proxy logs you should see lot of logs when you hit customerapp. And if it is not, then there is an issue with routing or proxy app
+
+Configure policies for proxyAPI in PCE instance API manager. Try applying simple auth and httpauth and you should see policies getting applied logs in proxyapp logs.
+
+Now try hitting the customerapp and it should now ask auth that you configured in API manager.
+You can try other policies like throttling.
+
+
+Extra steps in CloudHub (anypoint.mulesoft.com) and latest PCE instance 2.0.0:
+
+In API manager 2.0, there are extra steps which are listed at ex: https://docs.mulesoft.com/api-manager/2.x/configure-autodiscovery-3-task
+You should first register the API in API manager and API manager should provide API name and API version and these two properties should be used when configuring the properties in Step2.
+                -Dapi.name=<long App name from API manager> ex: groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:proxyapp     
+               -Dapi.version=<version of the app ex: v1:136567>    
+     3. Also clientId and secret are for the environment instead of organization. Make sure you created the API in corresponding environment from which clientId and secret are provided to proxy.
+
+Example property: cf set-env muleappproxy MULE_JAVA_OPTS "-Dapi.name=groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:mm -Dapi.version=v1:136567 -Dimplementation.host=muleapp.apps.santafesprings.cf-app.com -Dimplementation.port=80 -Dimplementation.path=/ -Danypoint.platform.client_id=cdbff39bfa4741fb9bb531ba6102a578 -Danypoint.platform.client_secret=56bB958Bc257464B9fF0A9F9E6Af9890 -Danypoint.platform.platform_base_uri=https://qax.anypoint.mulesoft.com/apiplatform -Danypoint.platform.coreservice_base_uri=https://qax.anypoint.mulesoft.com/accounts -Danypoint.platform.on_prem=false -Danypoint.platform.contracts_base_uri=https://qax.anypoint.mulesoft.com/apigateway/ccs"
+
+
+
+
+
+
+
+
+
+
+=== PCF-PAS
+The buildpacks and tiles provided have been tested and verified with the following versions of PCF-PAS:
+
+**** 2.3
+**** 2.2
+**** 2.1
+=== What isn’t supported with PCF?
+Deploying Mule applications through Runtime Manager is no longer supported in PCE 2.0 or the Cloud. You must use PCF native tooling for deployments.
+
+
+
 
 == To Install and Configure
 
