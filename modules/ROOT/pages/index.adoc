@@ -50,7 +50,7 @@ The third service broker is used to count the number of incoming transactions fo
 
 === What Anypoint Platform for PCF Supports
 
-==== On-premise standalone
+==== On-premises standalone
 
 ===== Mule Application Deployments
 In practice, customers use the native tooling (API, CLI) that Anypoint Platform for PCF provides to deploy and manage their Mule applications similar to other applications they deploy and manage on Anypoint Platform for PCF. 
