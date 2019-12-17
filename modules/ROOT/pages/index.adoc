@@ -4,35 +4,35 @@ include::_attributes.adoc[]
 endif::[]
 :keywords: pcf, pivotal cloud foundry,
 
-The Anypoint Platform for Pivotal Cloud Foundry (PCF) component is a fully integrated solution that enables organizations to design, develop, deploy, manage, and operate APIs, connectivity apps and microservices within the infrastructure provided by Pivotal Cloud Foundry.
+The Anypoint Platform for Pivotal Cloud Foundry (Anypoint Platform for PCF) component is a fully integrated solution that enables organizations to design, develop, deploy, manage, and operate APIs, connectivity apps and microservices within the infrastructure provided by Anypoint Platform for PCF.
 
 The Anypoint Platform for PCF solution enables you to:
 
-* Deploy Mule applications to PCF using the Runtime Manager UI.
-* Create and deploy a Mule proxy application to PCF. A proxy application intercepts traffic to a non-Mule application, enabling you to apply policies and view usage metrics.
+* Deploy Mule applications to Anypoint Platform for PCF using the Runtime Manager UI.
+* Create and deploy a Mule proxy application to Anypoint Platform for PCF. A proxy application intercepts traffic to a non-Mule application, enabling you to apply policies and view usage metrics.
 
-If you are using Anypoint Platform for PCF and you have multiple PCF installations, each must be linked to its own separate installation of Anypoint Platform Private Cloud Edition.
+If you are using Anypoint Platform for PCF and you have multiple Anypoint Platform for PCF installations, each must be linked to its own separate installation of Anypoint Platform Private Cloud Edition.
 
-If you have a PCF installation with multiple spaces, you must run the *Space Configuration Tool* on each of these spaces. If your Anypoint Platform organization uses multiple environments, it is recommended that you have one PCF space for each.
+If you have an Anypoint Platform for PCF installation with multiple spaces, you must run the *Space Configuration Tool* on each of these spaces. If your Anypoint Platform organization uses multiple environments, it is recommended that you have one Anypoint Platform for PCF space for each.
 
 Anypoint Platform for PCF uses the following services:
 
-* **Runtime Manager Service**: exposes PCF as a deployment target within the Anypoint Runtime Manager and lets you deploy Mule applications to PCF, alongside other deployment targets.
+* **Runtime Manager Service**: exposes Anypoint Platform for PCF as a deployment target within the Anypoint Runtime Manager and lets you deploy Mule applications to Anypoint Platform for PCF, alongside other deployment targets.
 
-* **API Gateway Service**: enables you to create and deploy a Mule API proxy that intercepts traffic to a non-Mule application running on PCF. This allows you to use the MuleSoft interface to apply policies over the API and the PCF interface to view usage and policy metrics.
+* **API Gateway Service**: enables you to create and deploy a Mule API proxy that intercepts traffic to a non-Mule application running on Anypoint Platform for PCF. This allows you to use the MuleSoft interface to apply policies over the API and the Anypoint Platform for PCF interface to view usage and policy metrics.
 
-* **Anypoint Metering Service**: provides an API that enables you to view usage metrics for Mule applications deployed to PCF. You can view usage metrics for production, pre-production, staging, and development environments.
+* **Anypoint Metering Service**: provides an API that enables you to view usage metrics for Mule applications deployed to Anypoint Platform for PCF. You can view usage metrics for production, pre-production, staging, and development environments.
 
-== What PCF Supports
+== What Anypoint Platform for PCF Supports
 
-When running Mule on Pivotal Cloud Foundry (PCF) and using the cloud-hosted control plane, deploy Runtime Fabric for Mule deployments alongside your PCF environment, as this provides better integration of Anypoint Platform, support for managed patches, and new runtime versions.
+When running Mule on Anypoint Platform for PCF and using the cloud-hosted control plane, deploy Runtime Fabric for Mule deployments alongside your Anypoint Platform for PCF environment, because this provides better integration of Anypoint Platform, support for managed patches, and new runtime versions.
 
-If you choose not to use the cloud-hosted control plane, use the native PCF tooling for deploying and managing Mule on PCF.
+If you choose not to use the cloud-hosted control plane, use the native Anypoint Platform for PCF tooling for deploying and managing Mule on Anypoint Platform for PCF.
 
 === What does MuleSoft provide?
 
-==== Buildpacks for Mule runtimes
-MuleSoft provides a buildpack for each of the following versions of the Mule runtime. These buildpacks enable you to deploy their applications to PCF using native tooling.
+==== Buildpacks for Mule Runtime Engines
+MuleSoft provides a buildpack for each of the following versions of the Mule runtime engine. These buildpacks enable you to deploy their applications to Anypoint Platform for PCF using native tooling.
 
 ***** Mule 3.9.1
 ***** Mule 3.8.7
@@ -41,38 +41,38 @@ MuleSoft provides a buildpack for each of the following versions of the Mule run
 ==== Anypoint Platform Tile
 The Anypoint Platform Tile contains 3 service brokers, which perform the following actions:
 
-***** Manage Mule applications in PCE v1.6.1 or earlier.
-***** Manage API policies in PCE v1.6.1 or earlier.
+***** Manage Mule applications in Anypoint Platform Private Cloud Edition v1.6.1 or earlier.
+***** Manage API policies in Anypoint Platform Private Cloud Edition v1.6.1 or earlier.
 ***** Count incoming transactions to deployed Mules.
 
-The first two service brokers are no longer compatible with Anypoint Private Cloud Edition (PCE) as of v1.7 and later. 
-The third service broker is used to count the number of incoming transactions for each Mule application or API. Coupled with a metering plugin which resides on each Mule buildpack, this service broker generates reports for auditing and licensing purposes. The service was built to support a transaction-based pricing model for Mules deployed on PCF.
+The first two service brokers are no longer compatible with Anypoint Platform Private Cloud Edition as of v1.7 and later. 
+The third service broker is used to count the number of incoming transactions for each Mule application or API. Coupled with a metering plugin which resides on each Mule buildpack, this service broker generates reports for auditing and licensing purposes. The service was built to support a transaction-based pricing model for Mules deployed on Anypoint Platform for PCF.
 
-=== What is supported with PCF?
+=== What is supported with Anypoint Platform for PCF?
 
 ==== On-premise standalone
 
 ===== Mule Application Deployments
-In practice, customers use the native tooling (API, CLI) that PCF provides to deploy and manage their Mule applications similar to other applications they deploy and manage on PCF. 
+In practice, customers use the native tooling (API, CLI) that Anypoint Platform for PCF provides to deploy and manage their Mule applications similar to other applications they deploy and manage on Anypoint Platform for PCF. 
 
 With the native tooling, customers can perform the following actions:
 
 ****** Deploy applications with CLI, API, or a common build pipeline
 ****** Set custom properties.
 ****** Horizontally scale their Mule applications by increasing the number of replicas.
-****** Specify the version of the Mule runtime per application.
+****** Specify the version of the Mule runtime engine per application.
 ****** Specify the amount of memory for each application replica.
-****** Cluster Mule runtimes by setting up an externalized HazelCast service broker.
+****** Cluster Mule runtime engines by setting up an externalized HazelCast service broker.
 ****** Configuring the application endpoint name.
 ****** Start, stop, and delete Mule applications.
-****** View monitoring data and set alerting via PCF metrics.
+****** View monitoring data and set alerting via Anypoint Platform for PCF metrics.
 ****** Re-deploy without downtime, with support for blue/green deployments.
 ****** Automatic failover of Mule applications.
 
 ===== API Policy Management 
-API policies are supported with the following additional setup:
+API policies are supported with the following additional setup.
 
-For PCE versions 1.6.x and 1.7.x:
+For Anypoint Platform Private Cloud Edition versions 1.6.x and 1.7.x:
 
 . Deploy an app:
 
@@ -80,7 +80,7 @@ For PCE versions 1.6.x and 1.7.x:
 .. After the app is created, run `cf app <app>` and make note of the app URL.
 . Deploy a proxy application:
                
-.. Use the PCE instance to get properties.
+.. Use the Anypoint Platform Private Cloud Edition instance to get properties.
 +
 ----
 -Dapi.name=<customerApp name>     
@@ -116,7 +116,7 @@ For PCE versions 1.6.x and 1.7.x:
 
 ***  The 2018-11-13T10:07:09.52-0800 [APP/PROC/WEB/0] OUT INFO  2018-11-13 18:07:09,494 [agw-policy-polling.01] com.mulesoft.module.policies.lifecyle.GateKeeper log should indicate that API <proxyappname> <version> is now unblocked.
 
-*** In the PCE instance of API manager, the proxy auto registers with status as ACTIVE. If you see `401` or `500` errors in the logs, make sure you have sufficient permissions to create an API in API manager. The proxy uses the properties provided in the previous step.
+*** In the Anypoint Platform Private Cloud Edition instance of API Manager, the proxy auto registers with status as ACTIVE. If you see `401` or `500` errors in the logs, make sure you have sufficient permissions to create an API in API Manager. The proxy uses the properties provided in the previous step.
 
 .. Create a user service instance for the proxy app using the following command:
 +
@@ -139,21 +139,21 @@ cf bind-route-service DOMAIN SERVICE-INSTANCE [--hostname HOSTNAME]
 ... To make sure that the app is getting routed through the proxy with policies applied, 
 hit the URL of the app to ensure it is reachable. You should see multiple logs. If not, then there is an issue with 
 routing or the proxy app.
-... In the PCE instance of API Manager, configure policies for proxyAPI.
+... In the Anypoint Platform Private Cloud Edition instance of API Manager, configure policies for proxyAPI.
 ... Apply simple auth and httpauth. You should see policies getting applied to logs in proxyapp logs.
-... Go to the customer app and it should now ask for the authorization that you configured in API manager.
+... Go to the customer app and it should now ask for the authorization that you configured in API Manager.
 
-====== For CloudHub (anypoint.mulesoft.com) and latest PCE instance 2.0.0:
+====== For CloudHub (anypoint.mulesoft.com) and latest Anypoint Platform Private Cloud Edition 2.0.0:
 
-. For API manager 2.0, perform the steps in xref:api-manager/2.x/configure-autodiscovery-3-task.adoc [Configuring API Gateway API Autodiscovery in a Mule 3 Application, role=external, window=_blank].
-. Register the API in API manager.
-. Use the API name and version provided by the API manager to configure the properties:
+. For API Manager 2.0, perform the steps in xref:api-manager/2.x/configure-autodiscovery-3-task.adoc [Configuring API Gateway API Autodiscovery in a Mule 3 Application, role=external, window=_blank].
+. Register the API in API Manager.
+. Use the API name and version provided by API Manager to configure the properties:
 +
 ----
--Dapi.name=<long App name from API manager> ex: groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:proxyapp     
+-Dapi.name=<long App name from API Manager> ex: groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:proxyapp     
 -Dapi.version=<version of the app ex: v1:136567>
 ----
-. Make sure you created the API in the environment from which `clientId` and `secret` are provided to the proxy. `clientId` and `secret` apply to the environment, not the organization. For example:
+. Verify that you created the API in the environment from which `clientId` and `secret` are provided to the proxy. `clientId` and `secret` apply to the environment, not the organization. For example:
 ----
 cf set-env muleappproxy MULE_JAVA_OPTS
 -Dapi.name=groupId:cef274d5-780e-48e2-9081-e98d5cfc6113:assetId:mm
@@ -167,18 +167,14 @@ cf set-env muleappproxy MULE_JAVA_OPTS
 -Danypoint.platform.contracts_base_uri=https://qax.anypoint.mulesoft.com/apigateway/ccs
 ----
 
-
 === PCF-PAS
 The buildpacks and tiles provided have been tested and verified with the following versions of PCF-PAS:
 
 **** 2.3
 **** 2.2
 **** 2.1
-=== What isn’t supported with PCF?
-Deploying Mule applications through Runtime Manager is no longer supported in PCE 2.0 or the Cloud. You must use PCF native tooling for deployments.
-
-
-
+=== What isn’t supported with Anypoint Platform for PCF?
+Deploying Mule applications through Runtime Manager is no longer supported in Anypoint Platform Private Cloud Edition 2.0 or the Cloud. You must use Anypoint Platform for PCF native tooling for deployments.
 
 == To Install and Configure
 
