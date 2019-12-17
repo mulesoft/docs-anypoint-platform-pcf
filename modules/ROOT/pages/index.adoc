@@ -29,7 +29,7 @@ When running Mule on Anypoint Platform for PCF and using the cloud-hosted contro
 
 If you choose not to use the cloud-hosted control plane, use the native Anypoint Platform for PCF tooling for deploying and managing Mule on Anypoint Platform for PCF.
 
-=== What does MuleSoft provide?
+=== What MuleSoft Provides
 
 ==== Buildpacks for Mule Runtime Engines
 MuleSoft provides a buildpack for each of the following versions of the Mule runtime engine. These buildpacks enable you to deploy their applications to Anypoint Platform for PCF using native tooling.
@@ -48,7 +48,7 @@ The Anypoint Platform Tile contains 3 service brokers, which perform the followi
 The first two service brokers are no longer compatible with Anypoint Platform Private Cloud Edition as of v1.7 and later. 
 The third service broker is used to count the number of incoming transactions for each Mule application or API. Coupled with a metering plugin which resides on each Mule buildpack, this service broker generates reports for auditing and licensing purposes. The service was built to support a transaction-based pricing model for Mules deployed on Anypoint Platform for PCF.
 
-=== What is supported with Anypoint Platform for PCF?
+=== What Anypoint Platform for PCF Supports
 
 ==== On-premise standalone
 
@@ -176,7 +176,7 @@ The buildpacks and tiles provided have been tested and verified with the followi
 === What isn’t supported with Anypoint Platform for PCF?
 Deploying Mule applications through Runtime Manager is no longer supported in Anypoint Platform Private Cloud Edition 2.0 or the Cloud. You must use Anypoint Platform for PCF native tooling for deployments.
 
-== To Install and Configure
+== Installation and Configuration
 
 For procedures for installing and configuring Anypoint Platform for PCF, see xref:pcf-workflow.adoc[Workflow: Install, Configure, and Use Anypoint Platform for PCF].
 
