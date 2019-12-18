@@ -38,15 +38,16 @@ MuleSoft provides a buildpack for each of the following versions of the Mule run
 ***** Mule 3.8.7
 ***** Mule 3.8.5
 ***** Mule 3.8.1
+
 ==== Anypoint Platform Tile
-The Anypoint Platform Tile contains 3 service brokers, which perform the following actions:
+The Anypoint Platform Tile contains three service brokers, which perform the following actions:
 
 ***** Manage Mule applications in Anypoint Platform Private Cloud Edition v1.6.1 or earlier.
 ***** Manage API policies in Anypoint Platform Private Cloud Edition v1.6.1 or earlier.
 ***** Count incoming transactions to deployed Mules.
 
 The first two service brokers are no longer compatible with Anypoint Platform Private Cloud Edition as of v1.7 and later. 
-The third service broker is used to count the number of incoming transactions for each Mule application or API. Coupled with a metering plugin which resides on each Mule buildpack, this service broker generates reports for auditing and licensing purposes. The service was built to support a transaction-based pricing model for Mules deployed on Anypoint Platform for PCF.
+The third service broker is used to count the number of incoming transactions for each Mule application or API. Coupled with a metering plugin which resides on each Mule buildpack, this service broker generates reports for auditing and licensing purposes. The service was built to support a transaction-based pricing model for Mule instances deployed on Anypoint Platform for PCF.
 
 === What Anypoint Platform for PCF Supports
 
@@ -112,32 +113,31 @@ For Anypoint Platform Private Cloud Edition versions 1.6.x and 1.7.x:
 . cf start <proxy>
 ----
 
-.. Tail the logs by running `cf logs <proxy>`.
+.. Tail the logs by running `cf logs <proxy>`:
 
 ***  The 2018-11-13T10:07:09.52-0800 [APP/PROC/WEB/0] OUT INFO  2018-11-13 18:07:09,494 [agw-policy-polling.01] com.mulesoft.module.policies.lifecyle.GateKeeper log should indicate that API <proxyappname> <version> is now unblocked.
 
-*** In the Anypoint Platform Private Cloud Edition instance of API Manager, the proxy auto registers with status as ACTIVE. If you see `401` or `500` errors in the logs, make sure you have sufficient permissions to create an API in API Manager. The proxy uses the properties provided in the previous step.
+*** In the Anypoint Platform Private Cloud Edition instance of API Manager, the proxy auto registers with status as ACTIVE. If you see `401` or `500` errors in the logs, verify you have sufficient permissions to create an API in API Manager. The proxy uses the properties provided in the previous step.
 
 .. Create a user service instance for the proxy app using the following command:
 +
 ----
 `cf create-user-provided-service SERVICE-INSTANCE -r ROUTE-SERVICE-URL`
 ----
-... For example, `cf create-user-provided-service muleappproxy -r https://muleappproxy.apps.santafesprings.cf-app.com`.
-... For additional information, refer to https://docs.cloudfoundry.org/services/route-services.html#user-provided[User-Provided Service, role=external, window=_blank].
+*** An example of this command is `cf create-user-provided-service muleappproxy -r https://muleappproxy.apps.santafesprings.cf-app.com`.
+*** For additional information, refer to https://docs.cloudfoundry.org/services/route-services.html#user-provided[User-Provided Service, role=external, window=_blank].
 
 .. Bind or create a route between proxyApp and the app using the following command:
 +
 ----
 cf bind-route-service DOMAIN SERVICE-INSTANCE [--hostname HOSTNAME]
 ----
+*** An example of this command is `cf bind-route-service apps.santafesprings.cf-app.com muleappproxy --hostname springbootapp`.
 
-... For example, `cf bind-route-service apps.santafesprings.cf-app.com muleappproxy --hostname springbootapp`.
+.. Verify the app URL.
 
-.. Verify the app URL
-
-... To make sure that the app is getting routed through the proxy with policies applied, 
-hit the URL of the app to ensure it is reachable. You should see multiple logs. If not, then there is an issue with 
+... To ensure that the app is being routed through the proxy with policies applied, 
+test the URL of the app to ensure it is reachable. You should see multiple logs. If not, then there is an issue with 
 routing or the proxy app.
 ... In the Anypoint Platform Private Cloud Edition instance of API Manager, configure policies for proxyAPI.
 ... Apply simple auth and httpauth. You should see policies getting applied to logs in proxyapp logs.
