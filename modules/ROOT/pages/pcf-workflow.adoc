@@ -11,14 +11,6 @@ PCF provides the infrastructure for the Anypoint Platform runtime plane. See the
 * http://docs.pivotal.io/pivotalcf/1-8/installing/index.html[PCF version 1.8]
 * http://docs.pivotal.io/pivotalcf/1-7/installing/index.html[PCF version 1.7]
 
-. Install the Anypoint Platform Private Cloud Edition.
-+
-[WARNING]
-To install Anypoint Platform Private Cloud Edition, you must contact your MuleSoft customer success representative to obtain a PCF-specific license. This license is required to install the Anypoint Platform Service Brokers for PCF in the next step.
-+
-Anypoint Platform Private Cloud Edition provides the infrastructure for the Anypoint Platform management plane. See xref:1.5@private-cloud::index.adoc[Anypoint Platform Private Cloud Edition] for more information:
-+
-
 . Install the Anypoint Platform Service Brokers for PCF tile.
 +
 See the Pivotal documentation at https://docs.pivotal.io/partners/mulesoft/index.html[Anypoint Platform Service Brokers for PCF].
