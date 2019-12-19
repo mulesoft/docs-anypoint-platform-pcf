@@ -171,6 +171,7 @@ The buildpacks and tiles provided have been tested and verified with the followi
 **** 2.3
 **** 2.2
 **** 2.1
+
 === What isn’t supported with Anypoint Platform for PCF?
 Deploying Mule applications through Runtime Manager is no longer supported in Anypoint Platform Private Cloud Edition 2.0 or the Cloud. You must use Anypoint Platform for PCF native tooling for deployments.
 
