@@ -143,7 +143,7 @@ routing or the proxy app.
 
 ====== For CloudHub (anypoint.mulesoft.com) and latest Anypoint Platform Private Cloud Edition 2.0.0:
 
-. For API Manager 2.0, perform the steps in xref:api-manager/2.x/configure-autodiscovery-3-task.adoc[Configuring API Gateway API Autodiscovery in a Mule 3 Application].
+. For API Manager 2.0, perform the steps in https://docs.mulesoft.com/api-manager/2.x/configure-autodiscovery-3-task[Configuring API Gateway API Autodiscovery in a Mule 3 Application].
 . Register the API in API Manager.
 . Use the API name and version provided by API Manager to configure the properties:
 +
