@@ -5,8 +5,6 @@ endif::[]
 
 Anypoint Platform for PCF requires the following software components:
 
-* Anypoint Platform Private Cloud Edition
-
 * Pivotal Cloud Foundry (PCF)
 +
 Anypoint Platform for PCF only supports Pivotal Cloud Foundry, versions 1.7.x and 1.8.x. It does not support the open source version of Cloud Foundry or any other Cloud Foundry distribution.
