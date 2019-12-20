@@ -51,8 +51,6 @@ pcf-services:
      serviceinstancename: 'anypoint-metering-service'
 ----
 
-Ensure that the values specified in `space_settings.yml` correspond to the values provided when installing the Anypoint Platform Service Brokers for PCF tile. See https://docs.pivotal.io/partners/mulesoft/configuring.html#services-config[Configure the Runtime Manager and API Gateway Service Brokers] for more information.
-
 To view the services installed in a PCF space, run the following command:
 
 ----
