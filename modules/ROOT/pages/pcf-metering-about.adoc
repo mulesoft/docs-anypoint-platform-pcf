@@ -12,8 +12,6 @@ Anypoint Platform for PCF provides a pricing plans based on different stages of 
 * staging
 * development
 
-You can configure Anypoint Platform Service Brokers for PCF to set limits on the number of monthly requests available for each plan type. See https://docs.pivotal.io/partners/mulesoft/configuring.html#metrics[Anypoint Platform Service Brokers for PCF] for more information.
-
 When you configure a space in PCF, you must assign it to one of these plans. The space config tool enables you to flag a space as production, pre-prod, etc.
 
 The limit you set for each plan is the total of all the spaces assigned to that plan. For example, if you set the production plan limit to 350 million requests, and you have three spaces assigned to this plan, any requests that are passed to these three spaces count towards the total number of requests.
