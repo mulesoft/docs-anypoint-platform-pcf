@@ -11,11 +11,6 @@ PCF provides the infrastructure for the Anypoint Platform runtime plane. See the
 * http://docs.pivotal.io/pivotalcf/1-8/installing/index.html[PCF version 1.8]
 * http://docs.pivotal.io/pivotalcf/1-7/installing/index.html[PCF version 1.7]
 
-. Install the Anypoint Platform Service Brokers for PCF tile.
-+
-See the Pivotal documentation at https://docs.pivotal.io/partners/mulesoft/index.html[Anypoint Platform Service Brokers for PCF].
-
-
 . Install the Mule Runtime Buildpack
 +
 The Mule Runtime buildpack is a custom version of the PCF Java buildpack that contains the Mule Runtime as well as supporting libraries, services, and application components. See xref:pcf-mule-runtime-buildpack.adoc[To Customize the Mule Runtime BuildPack].
