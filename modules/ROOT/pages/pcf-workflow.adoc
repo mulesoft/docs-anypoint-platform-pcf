@@ -16,7 +16,6 @@ PCF provides the infrastructure for the Anypoint Platform runtime plane. See the
 The Mule Runtime buildpack is a custom version of the PCF Java buildpack that contains the Mule Runtime as well as supporting libraries, services, and application components. See xref:pcf-mule-runtime-buildpack.adoc[To Customize the Mule Runtime BuildPack].
 +
 
-
 . Run the PCF Space Configuration Tool
 +
 The PCF Space Configuration Tool installs Anypoint Platform services in a PCF space. You must run this tool for each space in your PCF installation. See xref:pcf-space-config.adoc[To Run the PCF Space Configuration Tool] for more information.
@@ -26,14 +25,8 @@ The PCF Space Configuration Tool installs Anypoint Platform services in a PCF sp
 +
 A Hazelcast server is required only if you are applying policies or scaling your APIs in a clustered PCF environment. See xref:pcf-mule-hazelcast.adoc[To Configure a Mule Hazelcast Server] for more information.
 
-
 . Deploy Mule applications to PCF.
 +
 After installing and configuring the previous components, you can deploy Mule applications to your PCF installation using the following:
 +
 - The cf CLI
-- Anypoint Runtime Manager
-
-. Access usage data using the PCF Metering API.
-+
-After your Mule applications are running, you can monitor your PCF usage via the PCF Metering API. See xref:pcf-metering.adoc[To Access Usage Data Using the PCF Metering API] for more information.
