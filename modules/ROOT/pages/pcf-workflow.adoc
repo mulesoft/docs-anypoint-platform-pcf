@@ -18,7 +18,7 @@ The Mule Runtime buildpack is a custom version of the PCF Java buildpack that co
 
 . Run the PCF Space Configuration Tool
 +
-The PCF Space Configuration Tool installs Anypoint Platform services in a PCF space. You must run this tool for each space in your PCF installation. See xref:pcf-space-config.adoc[To Run the PCF Space Configuration Tool] for more information.
+The PCF Space Configuration Tool installs Anypoint Platform services in a PCF space. See xref:pcf-space-config.adoc[To Run the PCF Space Configuration Tool] for more information.
 
 
 . (Optional) Configure a Hazelcast Server
