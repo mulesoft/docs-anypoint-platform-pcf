@@ -10,8 +10,6 @@ The Anypoint Platform for PCF solution enables you to:
 
 * Create and deploy a Mule proxy application to PCF. A proxy application intercepts traffic to a non-Mule application, enabling you to apply policies and view usage metrics.
 
-If you have a PCF installation with multiple spaces, you must run the *Space Configuration Tool* on each of these spaces. If your Anypoint Platform organization uses multiple environments, it is recommended that you have one PCF space for each.
-
 Anypoint Platform for PCF uses the following services:
 
 * **API Gateway Service**: enables you to create and deploy a Mule API proxy that intercepts traffic to a non-Mule application running on PCF. This allows you to use the MuleSoft interface to apply policies over the API and the PCF interface to view usage and policy metrics.
