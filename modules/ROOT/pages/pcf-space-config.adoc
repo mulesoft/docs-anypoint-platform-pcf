@@ -6,15 +6,13 @@ endif::[]
 
 Pivotal Cloud Foundry (PCF) uses spaces to create different environments for development, staging, and production. Anypoint Platform also uses PCF spaces for reporting usage metrics.
 
+Contact your MuleSoft Customer Success Manager for more information.
+
 The Space Configuration Tool creates the following services in a PCF space:
 
 * API Gateway Service
-* Runtime Manager Service
-* PCF Metering Service
 
 The Space Configuration Tool also creates a cloud installer app named: `cloudmanager-<uuid>`. The value of `uuid` is a unique identifier for a PCF space.
-
-Each instance of the Space Configuration Tool is linked to an individual PCF space. If you need to manage multiple PCF spaces, you must run the the Space Configuration Tool in each PCF space.
 
 == To Install the Space Configuration Tool
 
@@ -31,7 +29,7 @@ python space_configuration_tool.py -i space_settings.yml
 
 == To Configure the space_settings.yml File
 
-In the `space_settings.yml` file, configure the `pcf-services` and `pcf-cloud-params` properties as required. You must create and configure a separate version of this file for each PCF space you are configuring.
+In the `space_settings.yml` file, configure the `pcf-services` and `pcf-cloud-params` properties as required.
 
 === pcf-services
 
@@ -51,8 +49,6 @@ pcf-services:
      serviceinstancename: 'anypoint-metering-service'
 ----
 
-Ensure that the values specified in `space_settings.yml` correspond to the values provided when installing the Anypoint Platform Service Brokers for PCF tile. See https://docs.pivotal.io/partners/mulesoft/configuring.html#services-config[Configure the Runtime Manager and API Gateway Service Brokers] for more information.
-
 To view the services installed in a PCF space, run the following command:
 
 ----
@@ -61,9 +57,9 @@ cf marketplace
 
 === pcf-cloud-params
 
-The Space Configuration Tool uses the properties defined in `pcf-cloud-params` to register a space in an Anypoint Platform organization. Using these properties, it makes API calls directly to the Anypoint Runtime Manager.
+The Space Configuration Tool uses the properties defined in `pcf-cloud-params` to register a space in an Anypoint Platform organization.
 
-Configure each of the following properties in the `space_settings.yml`. The values you define here must be unique for each PCF space you are configuring.
+Configure each of the following properties in the `space_settings.yml`.
 
 [%header%autowidth.spread]
 |===
@@ -83,12 +79,10 @@ Configure each of the following properties in the `space_settings.yml`. The valu
 |COM_MULESOFT_ARMSERVICES_CLIENT_CLIENTID |  the masterorg `cliientId` used to access Anypoint platform.
 |COM_MULESOFT_ARMSERVICES_CLIENT_CLIENTSECRET | the masterorg `clientSecret` used to access Anypoint platform.
 |COM_MULESOFT_ARMSERVICES_CLIENT_BASEURL |
-|COM_MULESOFT_ARMSERVICES_CLIENT_INSECURE | skips SSL validation when connecting to the Runtime Manager. Set this to false only if your Anypoint Platform installation does not have valid HTTPS certificates.
+|COM_MULESOFT_ARMSERVICES_CLIENT_INSECURE | skips SSL validation. Set this to false only if your Anypoint Platform installation does not have valid HTTPS certificates.
 |AUTHENTICATION_URL | the authentication URL of your Anypoint Platform installation.
 |AUTHENTICATION_INSECURE |
 |===
-
-
 
 == To Verify the Space Configuration Tool Installation
 
@@ -102,9 +96,7 @@ cf services
 +
 You should see the following services listed:
 +
-* anypoint-metering-service
 * api-gateway-service
-* runtime-manager-service
 
 . View the list of apps installed in a space:
 +
@@ -118,4 +110,4 @@ You should see an application similar to the following:
 cloud-manager-xxxxxxxxx-xxxxx-xxxxx-xxxx-c2c8882f6d65.mydomain.com
 ----
 +
-The “uuid” is a unique value for a combination of space and Anypoint Platform organization. You must never delete `cloud-manager` as it is used by the Anypoint Platform to deploy apps to PCF spaces.
+The “uuid” is a unique value for a combination of space and Anypoint Platform organization. You must never delete `cloud-manager` as it is used by the Anypoint Platform to deploy apps to a PCF space.
