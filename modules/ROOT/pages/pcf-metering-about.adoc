@@ -1,9 +1,9 @@
-= About PCF Metrics and Usage
+= About PCF Metering
 ifndef::env-site,env-github[]
 include::_attributes.adoc[]
 endif::[]
 
-This topic describes the metrics feature of the Anypoint Platform for PCF.
+This topic describes the metering feature of Anypoint Platform for Pivotal Cloud Foundry (Anypoint Platform for PCF).
 
 Anypoint Platform for PCF provides a pricing plans based on different stages of the application development life cycle:
 

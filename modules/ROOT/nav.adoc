@@ -5,6 +5,6 @@
  ** xref:pcf-mule-runtime-buildpack.adoc[To Install the Mule Runtime BuildPack]
  ** xref:pcf-space-config.adoc[To Run the PCF Space Configuration Tool]
  ** xref:pcf-mule-hazelcast.adoc[(Optional) To Configure the Mule Hazelcast Server]
-* xref:pcf-metering-about.adoc[About PCF Metrics and Usage]
+* xref:pcf-metering-about.adoc[About PCF Metering]
 * xref:pcf-metering.adoc[To Access Usage Data with the PCF Metering API]
 * xref:pcf-buildpack-customize.adoc[To Customize the Mule Runtime Buildpack]
