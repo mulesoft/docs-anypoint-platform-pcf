@@ -53,11 +53,11 @@ When designing your applications, keep in mind that PCF automatically allocates 
 
 This port is supplied to the application through the Java property `${http.port}`. This is the only port on which your application receives inbound traffic. Additionally, applications can only provide a single HTTP listener component.
 
-You must ensure that your application does not specify the `http.port` variable in the `mule-app.properties` file or configuration files loaded through Spring Properties Placeholders. Properties defined in these locations override the port supplied through PCF environment variables mechanims. This will prevent connectivity to your app after it is deployed.
+You must ensure that your application does not specify the `http.port` variable in the `mule-app.properties` file or configuration files loaded through Spring Properties Placeholders. Properties defined in these locations override the port supplied through PCF environment variables mechanism. This will prevent connectivity to your app after it is deployed.
 
 == Container Disk Size
 
-Ensure that you allocate more disk space than memory to your application. This enables you to generate a JVM heap dump if requrested by the MuleSoft support team for diagnostics purposes.
+Ensure that you allocate more disk space than memory to your application. This enables you to generate a JVM heap dump if requested by the MuleSoft support team for diagnostics purposes.
 
 == Application-Specific Configuration
 
@@ -100,7 +100,7 @@ Pay attention to the version of the runtime that patches apply to, and ensure it
 
 The Mule runtime buildpack provides out-of-the-box integration with App Dynamics through the standard JavaBuildpack App Dynamics Extension. If the application has a bound custom service following https://github.com/cloudfoundry/java-buildpack/blob/master/docs/framework-app_dynamics_agent.md[naming conventions] and pointing to an App Dynamics instace, the JVM will start with the appropriate flags to connect to it.
 
-See more details aboud App Dynamics integration https://github.com/cloudfoundry/java-buildpack/blob/master/docs/framework-app_dynamics_agent.md[here]
+See more details about App Dynamics integration https://github.com/cloudfoundry/java-buildpack/blob/master/docs/framework-app_dynamics_agent.md[here]
 
 === Integration with Other Components Supported by the Java Buildpack
 
@@ -115,7 +115,7 @@ Add a `JBP_LOG_LEVEL=debug` environment variable to generate verbose debugging o
 
 === JVM Diagnostics Information
 
-If a runtime deployed on a Cloud Foundry environment through the builpack runs into issues, MuleSoft Support team will request a JVM heap dump or JVM thread dump for diagnostics purposes. In order to generate one, you need to log in the CF container running your application, use JDK tools to generate the dump, and upload the data through `scp` or `sftp` outside the CF env.
+If a runtime deployed on a Cloud Foundry environment through the buildpack runs into issues, MuleSoft Support team will request a JVM heap dump or JVM thread dump for diagnostics purposes. In order to generate one, you need to log in the CF container running your application, use JDK tools to generate the dump, and upload the data through `scp` or `sftp` outside the CF env.
 
 [IMPORTANT]
 *Make sure your application always has more disk space allocated than memory, to be able to store the dumps on the container transient storage filesystem and upload to an external SFTP or SSH server.*

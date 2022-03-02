@@ -76,7 +76,7 @@ Configure each of the following properties in the `space_settings.yml`. The valu
 |COM_MULESOFT_CLOUD_MANAGER_PCF_APIURL | the URL of your PCF Apps Manager instance
 |COM_MULESOFT_CLOUD_MANAGER_PCF_DOMAIN | the domain name of your PCF installation
 |COM_MULESOFT_CLOUD_MANAGER_PCF_USERNAME | your PCF administrator username
-|COM_MULESOFT_CLOUD_MANAGER_PCF_PASSWORD | your PCF adminsitrator password
+|COM_MULESOFT_CLOUD_MANAGER_PCF_PASSWORD | your PCF administrator password
 |COM_MULESOFT_CLOUD_MANAGER_PCF_SPACE | the name of the PCF space where you are running the Space Configuration Tool.
 |COM_MULESOFT_CLOUD_MANAGER_PCF_ORG | the name of the PCF org where you are running the Space Configuration Tool.
 |COM_MULESOFT_CLOUD_MANAGER_PCF_SKIPSSLVALIDATION | skips PCF SSL validation. Set this to false only if PCF deployment doesn't have valid HTTPS certifications.
