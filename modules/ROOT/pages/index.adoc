@@ -113,7 +113,7 @@ For Anypoint Platform Private Cloud Edition versions 1.6.x and 1.7.x:
 
 .. Tail the logs by running `cf logs <proxy>`:
 
-***  The 2018-11-13T10:07:09.52-0800 [APP/PROC/WEB/0] OUT INFO  2018-11-13 18:07:09,494 [agw-policy-polling.01] com.mulesoft.module.policies.lifecyle.GateKeeper log should indicate that API <proxyappname> <version> is now unblocked.
+***  The 2018-11-13T10:07:09.52-0800 [APP/PROC/WEB/0] OUT INFO  2018-11-13 18:07:09,494 [agw-policy-polling.01] com.mulesoft.module.policies.lifecycle.GateKeeper log should indicate that API <proxyappname> <version> is now unblocked.
 
 *** In the Anypoint Platform Private Cloud Edition instance of API Manager, the proxy auto registers with status as ACTIVE. If you see `401` or `500` errors in the logs, verify you have sufficient permissions to create an API in API Manager. The proxy uses the properties provided in the previous step.
 

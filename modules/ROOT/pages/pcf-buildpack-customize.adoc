@@ -115,7 +115,7 @@ Add a `JBP_LOG_LEVEL=debug` environment variable to generate verbose debugging o
 
 === JVM Diagnostics Information
 
-If a runtime deployed on a Cloud Foundry environment through the builpack runs into issues, MuleSoft Support team will request a JVM heap dump or JVM thread dump for diagnostics purposes. In order to generate one, you need to log in the CF container running your application, use JDK tools to generate the dump, and upload the data through `scp` or `sftp` outside the CF env.
+If a runtime deployed on a Cloud Foundry environment through the buildpack runs into issues, MuleSoft Support team will request a JVM heap dump or JVM thread dump for diagnostics purposes. In order to generate one, you need to log in the CF container running your application, use JDK tools to generate the dump, and upload the data through `scp` or `sftp` outside the CF env.
 
 [IMPORTANT]
 *Make sure your application always has more disk space allocated than memory, to be able to store the dumps on the container transient storage file system and upload to an external SFTP or SSH server.*
