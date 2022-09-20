@@ -98,7 +98,7 @@ Pay attention to the version of the runtime that patches apply to, and ensure it
 
 === AppDynamics Integration
 
-The Mule runtime buildpack provides out-of-the-box integration with App Dynamics through the standard JavaBuildpack App Dynamics Extension. If the application has a bound custom service following https://github.com/cloudfoundry/java-buildpack/blob/master/docs/framework-app_dynamics_agent.md[naming conventions] and pointing to an App Dynamics instace, the JVM will start with the appropriate flags to connect to it.
+The Mule runtime buildpack provides out-of-the-box integration with App Dynamics through the standard JavaBuildpack App Dynamics Extension. If the application has a bound custom service following https://github.com/cloudfoundry/java-buildpack/blob/main/docs/framework-app_dynamics_agent.md[naming conventions] and pointing to an App Dynamics instace, the JVM will start with the appropriate flags to connect to it.
 
 See more details about App Dynamics integration https://github.com/cloudfoundry/java-buildpack/blob/master/docs/framework-app_dynamics_agent.md[here]
 
