@@ -3,6 +3,3 @@ title: Anypoint Platform for PCF
 version: '1.5'
 nav:
 - modules/ROOT/nav.adoc
-asciidoc:
-  attributes:
-    endOfLife: true
