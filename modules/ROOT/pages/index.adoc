@@ -27,9 +27,9 @@ When running Mule on Anypoint Platform for PCF and using the cloud-hosted contro
 
 If you choose not to use the cloud-hosted control plane, use the native Anypoint Platform for PCF tooling for deploying and managing Mule on Anypoint Platform for PCF.
 
-=== What MuleSoft Provides
+== What MuleSoft Provides
 
-==== Buildpacks for Mule Runtime Engines
+=== Buildpacks for Mule Runtime Engines
 MuleSoft provides a buildpack for each of the following versions of the Mule runtime engine. These buildpacks enable you to deploy their applications to Anypoint Platform for PCF using native tooling.
 
 ***** Mule 3.9.1
@@ -37,7 +37,7 @@ MuleSoft provides a buildpack for each of the following versions of the Mule run
 ***** Mule 3.8.5
 ***** Mule 3.8.1
 
-==== Anypoint Platform Tile
+=== Anypoint Platform Tile
 The Anypoint Platform Tile contains three service brokers, which perform the following actions:
 
 ***** Manage Mule applications in Anypoint Platform Private Cloud Edition v1.6.1 or earlier.
@@ -47,11 +47,11 @@ The Anypoint Platform Tile contains three service brokers, which perform the fol
 The first two service brokers are no longer compatible with Anypoint Platform Private Cloud Edition as of v1.7 and later. 
 The third service broker is used to count the number of incoming transactions for each Mule application or API. Coupled with a metering plugin which resides on each Mule buildpack, this service broker generates reports for auditing and licensing purposes. The service was built to support a transaction-based pricing model for Mule instances deployed on Anypoint Platform for PCF.
 
-=== What Anypoint Platform for PCF Supports
+== What Anypoint Platform for PCF Supports
 
-==== On-premises standalone
+=== On-premises standalone
 
-===== Mule Application Deployments
+==== Mule Application Deployments
 In practice, customers use the native tooling (API, CLI) that Anypoint Platform for PCF provides to deploy and manage their Mule applications similar to other applications they deploy and manage on Anypoint Platform for PCF. 
 
 With the native tooling, customers can perform the following actions:
@@ -68,7 +68,7 @@ With the native tooling, customers can perform the following actions:
 ****** Re-deploy without downtime, with support for blue/green deployments.
 ****** Automatic failover of Mule applications.
 
-===== API Policy Management 
+==== API Policy Management 
 API policies are supported with the following additional setup.
 
 For Anypoint Platform Private Cloud Edition versions 1.6.x and 1.7.x:
@@ -141,7 +141,7 @@ routing or the proxy app.
 ... Apply simple auth and httpauth. You should see policies getting applied to logs in proxyapp logs.
 ... Go to the customer app and it should now ask for the authorization that you configured in API Manager.
 
-====== For CloudHub (anypoint.mulesoft.com) and latest Anypoint Platform Private Cloud Edition 2.0.0:
+===== For CloudHub (anypoint.mulesoft.com) and latest Anypoint Platform Private Cloud Edition 2.0.0:
 
 . For API Manager 2.0, perform the steps in https://docs.mulesoft.com/api-manager/2.x/configure-autodiscovery-3-task[Configuring API Gateway API Autodiscovery in a Mule 3 Application].
 . Register the API in API Manager.
